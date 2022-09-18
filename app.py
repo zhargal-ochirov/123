@@ -108,6 +108,8 @@ class Ui_MainWindow(QDialog):
 
         if list(dict_result_sort.keys())[0] == session_users[n_session]:
             self.ui.lineEdit.setText(session_users[n_session])
+        else:
+            self.ui.lineEdit.setText('unknown')
         print(session_users[n_session])
 
 
