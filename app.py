@@ -96,9 +96,17 @@ class Ui_MainWindow(QDialog):
         n_session = int(n_session)
         # print(type(n_session))
 
-        result = functions.Eucliadian_dist(expected_values, session_letters, n_session)
-        dict_result = dict(zip(patterns_users, result))
-        dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        if self.comboBox.currentText() == 'Евклидово расстояние':
+            result = functions.Eucliadian_dist(expected_values, session_letters, n_session)
+            dict_result = dict(zip(patterns_users, result))
+            dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        elif self.comboBox.currentText() == 'Манхэтонское расстояние':
+            result = functions.Manhattan_dist(expected_values, session_letters, n_session)
+            dict_result = dict(zip(patterns_users, result))
+            dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        else:
+            print(self.comboBox.currentText())
+            dict_result_sort = None
 
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Results()
@@ -111,6 +119,8 @@ class Ui_MainWindow(QDialog):
         else:
             self.ui.lineEdit.setText('unknown')
         print(session_users[n_session])
+        print(self.comboBox.currentText())
+        print("Евклидово расстояние" == self.comboBox.currentText())
 
 
         # print(dict_result_sort)
