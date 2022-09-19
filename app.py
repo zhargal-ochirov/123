@@ -55,7 +55,8 @@ class Ui_MainWindow(QDialog):
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(150, 200, 241, 22))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItems(['Евклидово расстояние', 'Манхэтонское расстояние'])
+        self.comboBox.addItems(['Евклидово расстояние', 'Манхэтонское расстояние', 'Евклидово расстояние + частотность',
+                                'Манхэтонское расстояние + частотность'])
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(80, 250, 321, 28))
         self.pushButton_2.setObjectName("pushButton_2")
@@ -92,6 +93,7 @@ class Ui_MainWindow(QDialog):
     def recognize(self):
         patterns_users, expected_values = functions.patterns()
         session_users, session_letters = functions.sessions(self.path_session)
+        frequency = functions.frequency()
         n_session = self.lineEdit_2.text()
         n_session = int(n_session)
         # print(type(n_session))
@@ -100,8 +102,16 @@ class Ui_MainWindow(QDialog):
             result = functions.Eucliadian_dist(expected_values, session_letters, n_session)
             dict_result = dict(zip(patterns_users, result))
             dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        elif self.comboBox.currentText() == 'Евклидово расстояние + частотность':
+            result = functions.Eucliadian_freq_dist(expected_values, session_letters, n_session, frequency)
+            dict_result = dict(zip(patterns_users, result))
+            dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
         elif self.comboBox.currentText() == 'Манхэтонское расстояние':
             result = functions.Manhattan_dist(expected_values, session_letters, n_session)
+            dict_result = dict(zip(patterns_users, result))
+            dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        elif self.comboBox.currentText() == 'Манхэтонское расстояние + частотность':
+            result = functions.Manhattan_freq_dist(expected_values, session_letters, n_session, frequency)
             dict_result = dict(zip(patterns_users, result))
             dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
         else:
@@ -118,9 +128,7 @@ class Ui_MainWindow(QDialog):
             self.ui.lineEdit.setText(session_users[n_session])
         else:
             self.ui.lineEdit.setText('unknown')
-        print(session_users[n_session])
-        print(self.comboBox.currentText())
-        print("Евклидово расстояние" == self.comboBox.currentText())
+
 
 
         # print(dict_result_sort)
