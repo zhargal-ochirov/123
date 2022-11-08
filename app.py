@@ -57,9 +57,9 @@ class Ui_MainWindow(QDialog):
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItems(['Евклидово расстояние', 'Манхэтонское расстояние', 'Евклидово расстояние + частотность',
                                 'Манхэтонское расстояние + частотность'])
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(80, 250, 321, 28))
-        self.pushButton_2.setObjectName("pushButton_2")
+        # self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        # self.pushButton_2.setGeometry(QtCore.QRect(80, 250, 321, 28))
+        # self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setGeometry(QtCore.QRect(80, 300, 321, 28))
         self.pushButton_3.setObjectName("pushButton_3")
@@ -78,7 +78,7 @@ class Ui_MainWindow(QDialog):
         self.label_2.setText(_translate("MainWindow", "Сессий в файле"))
         self.label_3.setText(_translate("MainWindow", "Выбрать номер сессий"))
         self.label_4.setText(_translate("MainWindow", "Метод распознования"))
-        self.pushButton_2.setText(_translate("MainWindow", "Точность методов"))
+        # self.pushButton_2.setText(_translate("MainWindow", "Точность методов"))
         self.pushButton_3.setText(_translate("MainWindow", "РАСПОЗНАТЬ"))
 
     def file_dialog(self):
@@ -94,7 +94,7 @@ class Ui_MainWindow(QDialog):
         patterns_users, expected_values = functions.patterns()
         session_users, session_letters = functions.sessions(self.path_session)
         frequency = functions.frequency()
-        n_session = self.lineEdit_2.text()
+        n_session = int(self.lineEdit_2.text()) - 1
         n_session = int(n_session)
         # print(type(n_session))
 

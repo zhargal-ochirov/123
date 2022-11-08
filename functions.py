@@ -12,7 +12,7 @@ def frequency():
 
 def patterns():
     with open(
-            'C:/Users/ozarg/Downloads/Telegram Desktop/Recognition/Recognition/Recognition/bin/Debug/stats/patterns.json',
+            'km.json',
             encoding='utf-8-sig') as f:
         patterns = json.load(f)
     # шаблоны пользователей и ожидаемые значения
