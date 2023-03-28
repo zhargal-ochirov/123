@@ -55,8 +55,8 @@ class Ui_MainWindow(QDialog):
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(150, 200, 241, 22))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItems(['Евклидово расстояние', 'Манхэтонское расстояние', 'Евклидово расстояние + частотность',
-                                'Манхэтонское расстояние + частотность'])
+        self.comboBox.addItems(['Евклидово расстояние', 'Манхэттеновское расстояние', 'Евклидово расстояние + частотность',
+                                'Манхэттеновское расстояние + частотность', 'Метод опорных векторов'])
         # self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         # self.pushButton_2.setGeometry(QtCore.QRect(80, 250, 321, 28))
         # self.pushButton_2.setObjectName("pushButton_2")
@@ -106,12 +106,16 @@ class Ui_MainWindow(QDialog):
             result = functions.Eucliadian_freq_dist(expected_values, session_letters, n_session, frequency)
             dict_result = dict(zip(patterns_users, result))
             dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
-        elif self.comboBox.currentText() == 'Манхэтонское расстояние':
+        elif self.comboBox.currentText() == 'Манхэттеновское расстояние':
             result = functions.Manhattan_dist(expected_values, session_letters, n_session)
             dict_result = dict(zip(patterns_users, result))
             dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
-        elif self.comboBox.currentText() == 'Манхэтонское расстояние + частотность':
+        elif self.comboBox.currentText() == 'Манхэттеновское расстояние + частотность':
             result = functions.Manhattan_freq_dist(expected_values, session_letters, n_session, frequency)
+            dict_result = dict(zip(patterns_users, result))
+            dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
+        elif self.comboBox.currentText() == 'Метод опорных векторов':
+            result = functions.SVM(expected_values, patterns_users, session_letters, n_session)
             dict_result = dict(zip(patterns_users, result))
             dict_result_sort = (dict(sorted(dict_result.items(), key=lambda x: x[1])))
         else:
@@ -120,11 +124,15 @@ class Ui_MainWindow(QDialog):
 
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Results()
-        self.ui.dict_sort = dict_result_sort
-        self.ui.setupUi(self.window)
-        self.window.show()
+        if self.comboBox.currentText() != 'метод опорных векторов':
+            self.ui.dict_sort = dict_result_sort
+            self.ui.setupUi(self.window)
+            self.window.show()
 
-        if list(dict_result_sort.keys())[0] == session_users[n_session]:
+            self.ui.label_2.setText(self.ui.label_2.text()+' '+self.comboBox.currentText())
+        if result[0] == session_users[n_session]:
+            self.ui.lineEdit.setText(session_users[n_session])
+        elif list(dict_result_sort.keys())[0] == session_users[n_session]:
             self.ui.lineEdit.setText(session_users[n_session])
         else:
             self.ui.lineEdit.setText('unknown')

@@ -1,5 +1,6 @@
 import json
 import operator
+from sklearn import svm
 
 
 def frequency():
@@ -81,4 +82,33 @@ def Manhattan_freq_dist(expected_values, session_letters, n_session, frequency):
                 dist_manhattan_freq += abs(float(i[j]['Value']) - session_letters[n_session][j]['Value']) * float(frequency[j]['value'])
                 k = dist_manhattan_freq
         result.append(k)
+    return result
+
+def SVM(expected_values, patterns_users,session_letters, n_session):
+    x = expected_values
+    y_train = patterns_users
+    session_letters = session_letters[n_session]
+    # print(session_letters)
+    # print(patterns_users)
+    x_train = []
+    train = []
+    for i in x:
+        for j in i:
+            k = j.get('Value')
+            train.append(k)
+        x_train.append(train)
+        train = []
+    y_pr = []
+    for i in session_letters:
+        p = i.get('Value')
+        y_pr.append(p)
+    # print(len(x[2]))
+    # print(len(x_train[2]))
+    # print((x_train[0]))
+    # print(len(y_train))
+    # print(x_train)
+    # print(y_pr)
+    clf = svm.SVC()
+    clf.fit(x_train, y_train)
+    result = clf.predict([y_pr])
     return result
