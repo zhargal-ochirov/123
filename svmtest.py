@@ -69,7 +69,7 @@ x_0 = x_train_data[y_train == 1]
 x_1 = x_train_data[y_train == -1]
 print(w)
 print(v)
-line_x = list(range((int(max(x_train_data[:, 0])))+1))
+line_x = list(range((int(10))))
 line_y = [-x*w[0]/w[1] for x in line_x]
 # print(line_y)
 
